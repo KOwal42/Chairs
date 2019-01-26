@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{057079C0-A49F-1AF7-578C-B15EB585F1AB}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BeltScroll.cs">
+    <Files>
+      <File FileName="Assets/Scripts/BeltScroll.cs" Line="29" Column="6" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

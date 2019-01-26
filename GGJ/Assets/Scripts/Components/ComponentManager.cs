@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ComponentManager : MonoBehaviour
+{
+    //
+    public GameObject[] Components = new GameObject[10]; 
+
+    //change to component type 
+    GameObject[,] board;
+
+    int spacing = 74;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    public void NewLevel(int width)
+    {
+        board = new GameObject[width, width];
+    }
+
+    //Add component X to the board at the current position 
+    public void AddComponent(Vector2 pos, int num)
+    {
+        if(board[(int)pos.x, (int)pos.y] == null)
+        {
+            Vector3 position = new Vector3(pos.x * spacing, 0f, pos.y * spacing);
+            GameObject component = Instantiate(Components[num], position, new Quaternion());
+        }
+        else
+        {
+            //POSITION IS FULL - WE CANT BUILD HERE?????
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
