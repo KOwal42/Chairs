@@ -20,19 +20,19 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            levelManager.MoveSquare(Vector2.down);
+            levelManager.MoveSquare(Vector2.up);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            levelManager.MoveSquare(Vector2.right);
+            levelManager.MoveSquare(Vector2.left);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            levelManager.MoveSquare(Vector2.up);
+            levelManager.MoveSquare(Vector2.down);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            levelManager.MoveSquare(Vector2.left);
+            levelManager.MoveSquare(Vector2.right);
         }
     }
 
@@ -82,9 +82,9 @@ public class InputManager : MonoBehaviour
 
     void UpdateCommands()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            levelManager.AddComponent(0);
+            levelManager.RotateSquare();
         }
     }
 

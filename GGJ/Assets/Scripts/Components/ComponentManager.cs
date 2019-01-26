@@ -10,7 +10,7 @@ public class ComponentManager : MonoBehaviour
     //change to component type 
     GameObject[,] board;
 
-    int spacing = 74;
+    int spacing = 64;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,7 @@ public class ComponentManager : MonoBehaviour
     //Rotate the component on the specified square 
     public void RotateComponent(Vector2 tilePos)
     {
-        //board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Rotate();
+        board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Rotate();
     }
 
     // Update is called once per frame

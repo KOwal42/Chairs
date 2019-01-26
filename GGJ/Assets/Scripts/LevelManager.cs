@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public Material BoardMaterial;
     public Material SelectedMaterial;
 
-    float spacing = 74f;
+    float spacing = 64f;
 
     public GameObject[,] GameBoard;
 
@@ -35,25 +35,24 @@ public class LevelManager : MonoBehaviour
         componentManager = GetComponentInParent<ComponentManager>();
         SetupLevels();
         LoadLevel();
-
     }
 
     void SetupLevels()
     {
-        var level = new Level(3, 100); // Level 1
+        var level = new Level(3, 100, 1); // Level 1
         levels.Add(level);
         levels.Add(level); //add it twice so that level 1 is [1] and not [0]
 
-        level = new Level(3, 80); // Level 2
+        level = new Level(3, 80, 2); // Level 2
         levels.Add(level);
 
-        level = new Level(4, 120); // Level 3
+        level = new Level(4, 120, 1); // Level 3
         levels.Add(level);
 
-        level = new Level(4, 100); // Level 4
+        level = new Level(4, 100, 2); // Level 4
         levels.Add(level);
 
-        level = new Level(5, 150); // Level 5
+        level = new Level(5, 150, 3); // Level 5
         levels.Add(level);
 
 
@@ -90,6 +89,11 @@ public class LevelManager : MonoBehaviour
         activeSquare.GetComponent<Renderer>().material = SelectedMaterial;
     }
 
+    public void RotateSquare()
+    {
+        componentManager.RotateComponent(selectedPos);
+    }
+
     public void AddComponent(int num)
     {
         componentManager.AddComponent(selectedPos, num);
@@ -111,6 +115,7 @@ public class LevelManager : MonoBehaviour
                 GameBoard[i, j].GetComponent<Renderer>().material = BoardMaterial;
             }
         }
+
         activeSquare = GameBoard[(int)selectedPos.x, (int)selectedPos.y];
         activeSquare.GetComponent<Renderer>().material = SelectedMaterial;
 

@@ -354,7 +354,6 @@
 /Users/work/Documents/GitHub/Chairs/GGJ/Temp/bin/Debug/Unity.Analytics.StandardEvents.dll.mdb
 /Users/work/Documents/GitHub/Chairs/GGJ/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
 /Users/work/Documents/GitHub/Chairs/GGJ/Temp/bin/Debug/Unity.IvyParser.dll.mdb
-/Users/work/Documents/GitHub/Chairs/GGJ/obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
 /Users/work/Documents/GitHub/Chairs/GGJ/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache
 /Users/work/Documents/GitHub/Chairs/GGJ/obj/Debug/Assembly-CSharp.csproj.CopyComplete
 /Users/work/Documents/GitHub/Chairs/GGJ/obj/Debug/Assembly-CSharp.dll

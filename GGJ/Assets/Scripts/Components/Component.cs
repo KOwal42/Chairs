@@ -9,14 +9,20 @@ public class Component : MonoBehaviour
     public Direction Dir = Direction.Up; 
     public float MoveSpeed = 10f;
 
-    Vector2 tilePos; //where on the board is this tile?
+    private Vector2 tileNum; //where on the board is this tile?
+
+    public Vector2 TileNum
+    {
+        get; set;
+    }
 
     //TODO - put somewhere static 
     private int partWidth = 18;
     private int tileWidth = 64;
 
-    private bool hasPart = true;
+    private bool hasPart = false;
 
+    //TODO make private after testing 
     public GameObject part;
 
     public GameObject Part
@@ -60,16 +66,16 @@ public class Component : MonoBehaviour
         switch (Dir)
         {
             case Direction.Up:
-                newTilePos = Vector2.up + tilePos;
+                newTilePos = Vector2.up + tileNum;
                 break;
             case Direction.Down:
-                newTilePos = Vector2.down + tilePos;
+                newTilePos = Vector2.down + tileNum;
                 break;
             case Direction.Left:
-                newTilePos = Vector2.left + tilePos;
+                newTilePos = Vector2.left + tileNum;
                 break;
             case Direction.Right:
-                newTilePos = Vector2.right + tilePos;
+                newTilePos = Vector2.right + tileNum;
                 break;
         }
 
@@ -105,27 +111,24 @@ public class Component : MonoBehaviour
         part.transform.position += movement;
     }
 
-    private void Rotate()
+    public void Rotate()
     {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            transform.localRotation = Quaternion.Euler(0f, transform.eulerAngles.y + 90f, 0f);
+        transform.localRotation = Quaternion.Euler(0f, transform.eulerAngles.y + 90f, 0f);
 
-            switch (Dir)
-            {
-                case Direction.Up:
-                    Dir = Direction.Right;
-                    break;
-                case Direction.Down:
-                    Dir = Direction.Left;
-                    break;
-                case Direction.Left:
-                    Dir = Direction.Up;
-                    break;
-                case Direction.Right:
-                    Dir = Direction.Down;
-                    break;
-            }
+        switch (Dir)
+        {
+            case Direction.Up:
+                Dir = Direction.Right;
+                break;
+            case Direction.Down:
+                Dir = Direction.Left;
+                break;
+            case Direction.Left:
+                Dir = Direction.Up;
+                break;
+            case Direction.Right:
+                Dir = Direction.Down;
+                break;
         }
     }
 
@@ -138,37 +141,30 @@ public class Component : MonoBehaviour
         //How much space do we have to move?
         var space = halfTile - halfPart;
 
-
         var partPos = part.transform.position;
         var tilePos = transform.position;
 
-
-
         if (partPos.x > tilePos.x + space)
         {
-            Debug.Log(partPos.x + "x+");
-           // GivePart();
+            GivePart();
         }
         else if (partPos.x < -(tilePos.x + space))
         {
-            Debug.Log(partPos.x + "x-");
-            // GivePart();
+            GivePart();
         }
         else if(partPos.z > tilePos.z + space)
         {
-            Debug.Log(partPos.z + "z+");
-
+            GivePart();
         }
         else if (partPos.z < -(tilePos.z + space))
         {
-            Debug.Log(partPos.z + "z-");
+            GivePart();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Rotate();
         if(hasPart)
         {
             MovePart();
