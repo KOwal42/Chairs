@@ -41,6 +41,7 @@ public class ComponentManager : MonoBehaviour
         {
             Vector3 position = new Vector3(pos.x * spacing, 0f, pos.y * spacing);
             board[(int)pos.x, (int)pos.y] = Instantiate(Components[num], position, new Quaternion());
+            board[(int)pos.x, (int)pos.y].GetComponent<Component>().TileNum = pos;
         }
         else
         {

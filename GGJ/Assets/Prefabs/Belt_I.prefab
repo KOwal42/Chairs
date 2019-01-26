@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  Dir: 0
+  Dir: 3
   MoveSpeed: 10
   part: {fileID: 0}
 --- !u!1 &7094265954459363724

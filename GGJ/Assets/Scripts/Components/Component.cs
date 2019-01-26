@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Component : MonoBehaviour
 {
+    //TODO fix all userless getters / setters
+
 
     public ComponentType Type;
     public Direction Dir = Direction.Up; 
     public float MoveSpeed = 5f;
 
-    private Vector2 tileNum; //where on the board is this tile?
+    //public Vector2 tileNum; //where on the board is this tile?
 
-    public Vector2 TileNum
-    {
-        get; set;
-    }
+    public Vector2 TileNum;
 
     //TODO - put somewhere static 
     private int partWidth = 18;
@@ -66,20 +65,19 @@ public class Component : MonoBehaviour
         switch (Dir)
         {
             case Direction.Up:
-                newTilePos = Vector2.up + tileNum;
+                newTilePos = Vector2.up + TileNum;
                 break;
             case Direction.Down:
-                newTilePos = Vector2.down + tileNum;
+                newTilePos = Vector2.down + TileNum;
                 break;
             case Direction.Left:
-                newTilePos = Vector2.left + tileNum;
+                newTilePos = Vector2.left + TileNum;
                 break;
             case Direction.Right:
-                newTilePos = Vector2.right + tileNum;
+                newTilePos = Vector2.right + TileNum;
                 break;
         }
 
-        part = null; //TODO test to see if this deletes part totally 
         hasPart = false;
 
         var manager = FindObjectOfType<ComponentManager>();
@@ -101,10 +99,10 @@ public class Component : MonoBehaviour
                 movement = Vector3.back * MoveSpeed * Time.deltaTime;
                 break;
             case Direction.Left:
-                movement = Vector3.right * MoveSpeed * Time.deltaTime;
+                movement = Vector3.left * MoveSpeed * Time.deltaTime;
                 break;
             case Direction.Right:
-                movement = Vector3.left * MoveSpeed * Time.deltaTime;
+                movement = Vector3.right * MoveSpeed * Time.deltaTime;
                 break;
         }
 
@@ -139,16 +137,18 @@ public class Component : MonoBehaviour
         var halfTile = tileWidth / 2;
 
         //How much space do we have to move?
-        var space = halfTile - halfPart;
+        var space = halfTile;// - halfPart;
 
         var partPos = part.transform.position;
         var tilePos = transform.position;
+
+        var i = TileNum;
 
         if (partPos.x > tilePos.x + space)
         {
             GivePart();
         }
-        else if (partPos.x < -(tilePos.x + space))
+        else if (partPos.x < tilePos.x - space)
         {
             GivePart();
         }
@@ -156,7 +156,7 @@ public class Component : MonoBehaviour
         {
             GivePart();
         }
-        else if (partPos.z < -(tilePos.z + space))
+        else if (partPos.z < tilePos.z - space)
         {
             GivePart();
         }
