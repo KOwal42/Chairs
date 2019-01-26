@@ -80,9 +80,18 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    void UpdateCommands()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            levelManager.AddComponent(0);
+        }
+    }
+
     void Update()
     {
         UpdateMovement();
         UpdateShortcuts();
+        UpdateCommands();
     }
 }
