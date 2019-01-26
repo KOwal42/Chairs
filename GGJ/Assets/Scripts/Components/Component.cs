@@ -7,7 +7,7 @@ public class Component : MonoBehaviour
 
     public ComponentType Type;
     public Direction Dir = Direction.Up; 
-    public float MoveSpeed = 10f;
+    public float MoveSpeed = 5f;
 
     private Vector2 tileNum; //where on the board is this tile?
 
@@ -95,10 +95,10 @@ public class Component : MonoBehaviour
         switch (Dir)
         {
             case Direction.Up:
-                movement = Vector3.back * MoveSpeed * Time.deltaTime;
+                movement = Vector3.forward * MoveSpeed * Time.deltaTime;
                 break;
             case Direction.Down:
-                movement = Vector3.forward * MoveSpeed * Time.deltaTime;
+                movement = Vector3.back * MoveSpeed * Time.deltaTime;
                 break;
             case Direction.Left:
                 movement = Vector3.right * MoveSpeed * Time.deltaTime;
