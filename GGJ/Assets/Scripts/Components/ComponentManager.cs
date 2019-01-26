@@ -37,10 +37,18 @@ public class ComponentManager : MonoBehaviour
         }
     }
 
+    //TODO - rename as it could confuse people 
     //Set the part to the specified tile
     public void MovePart(GameObject part, Vector2 tilePos)
     {
+        Debug.Log("MOVING PART");
         board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Part = part;
+    }
+
+    //Rotate the component on the specified square 
+    public void RotateComponent(Vector2 tilePos)
+    {
+        //board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Rotate();
     }
 
     // Update is called once per frame
