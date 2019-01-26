@@ -29,12 +29,18 @@ public class ComponentManager : MonoBehaviour
         if(board[(int)pos.x, (int)pos.y] == null)
         {
             Vector3 position = new Vector3(pos.x * spacing, 0f, pos.y * spacing);
-            GameObject component = Instantiate(Components[num], position, new Quaternion());
+            board[(int)pos.x, (int)pos.y] = Instantiate(Components[num], position, new Quaternion());
         }
         else
         {
-            //POSITION IS FULL - WE CANT BUILD HERE?????
+            //TODO POSITION IS FULL - WE CANT BUILD HERE?????
         }
+    }
+
+    //Set the part to the specified tile
+    public void MovePart(GameObject part, Vector2 tilePos)
+    {
+        board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Part = part;
     }
 
     // Update is called once per frame
