@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 [RequireComponent(typeof(ComponentManager))]
 public class LevelManager : MonoBehaviour
 {
@@ -23,11 +21,7 @@ public class LevelManager : MonoBehaviour
 
     List<Level> levels = new List<Level>();
 
-
-
-
     ComponentManager componentManager;
-
 
     // Start is called before the first frame update
     void Start()
@@ -35,26 +29,20 @@ public class LevelManager : MonoBehaviour
         componentManager = GetComponentInParent<ComponentManager>();
         SetupLevels();
         LoadLevel();
+        componentManager.AddInputs(levels[currentLevelNo].Inputs);
     }
 
     void SetupLevels()
     {
-        var level = new Level(3, 100, 1); // Level 1
+        var level = new Level(3, 100,new int[1] {1}, 2); // Level 1
         levels.Add(level);
         levels.Add(level); //add it twice so that level 1 is [1] and not [0]
 
-        level = new Level(3, 80, 2); // Level 2
+        level = new Level(3, 80, new int[1] {1}, 1); // Level 2
         levels.Add(level);
 
-        level = new Level(4, 120, 1); // Level 3
+        level = new Level(4, 120, new int[2] {2, 3}, 1); // Level 3
         levels.Add(level);
-
-        level = new Level(4, 100, 2); // Level 4
-        levels.Add(level);
-
-        level = new Level(5, 150, 3); // Level 5
-        levels.Add(level);
-
 
         currentLevel = levels[currentLevelNo];
     }
@@ -99,6 +87,12 @@ public class LevelManager : MonoBehaviour
         componentManager.AddComponent(selectedPos, num);
     }
 
+
+    void Activate()
+    {
+
+    }
+
     void LoadLevel()
     {
         var width = currentLevel.Width;
@@ -110,7 +104,7 @@ public class LevelManager : MonoBehaviour
             for (int j = 0; j < width; j++)
             {
                 GameBoard[i,j] = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                GameBoard[i, j].transform.position = new Vector3(i * spacing, 0f, j * spacing);
+                GameBoard[i, j].transform.position = new Vector3(i * spacing, -9f, j * spacing);
                 GameBoard[i, j].transform.localScale = new Vector3(64f, 1f, 64f);
                 GameBoard[i, j].GetComponent<Renderer>().material = BoardMaterial;
             }

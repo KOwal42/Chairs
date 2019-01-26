@@ -20,17 +20,24 @@ public class Level : MonoBehaviour
         get; set;
     }
 
-    private int entryPoint;
+    private int[] inputs;
 
-    public int EntryPoint
+    public int[] Inputs
     {
         get; set;
     }
 
-    public Level(int width, int money, int entryPoint)
+    private List<int> outputs;
+
+    public int Outputs
+    {
+        get; set;
+    }
+
+    public Level(int width, int money, int[] inputs, int outputs)
     {
         this.Width = width;
         this.Money = money;
-        this.EntryPoint = entryPoint;
+        this.Inputs = inputs;
     }
 }

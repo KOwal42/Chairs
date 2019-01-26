@@ -83,7 +83,7 @@ public class Component : MonoBehaviour
         hasPart = false;
 
         var manager = FindObjectOfType<ComponentManager>();
-        //manager.MovePart();
+        manager.MovePart(part, newTilePos);
     }
 
     //TODO RENAME
