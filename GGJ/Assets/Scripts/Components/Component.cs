@@ -9,9 +9,7 @@ public class Component : MonoBehaviour
 
     public ComponentType Type;
     public Direction Dir = Direction.Up;
-
-    public Direction PreviousDir = Direction.Up;
-
+    
     public float MoveSpeed = 5f;
 
     //public Vector2 tileNum; //where on the board is this tile?
@@ -22,23 +20,22 @@ public class Component : MonoBehaviour
     private int partWidth = 18;
     private int tileWidth = 64;
 
-    private bool hasPart = false;
-
+    private bool hasParts = false;
     private bool isAligned = false;
 
     //TODO make private after testing 
-    public GameObject part;
+    public List<GameObject> parts;
 
-    public GameObject Part
+    public List<GameObject> Parts
     {
         get
         {
-            return part;
+            return parts;
         }
         set
         {
-            this.part = value;
-            hasPart = true;
+            this.parts = value;
+            hasParts = true;
         }
     }
 
@@ -66,7 +63,7 @@ public class Component : MonoBehaviour
 
     //TODO RENAME
     //Move the part in the set direction 
-    private void MovePart()
+    private void MovePart(GameObject part)
     {
         Vector3 movement = Vector3.zero;
 
@@ -90,7 +87,7 @@ public class Component : MonoBehaviour
     }
 
     //TODO - merge this with MovePart. Keep seperate until tested 
-    void MoveToCentre()
+    void MoveToCentre(GameObject part)
     {
         var pos = part.transform.position;
 
@@ -110,7 +107,7 @@ public class Component : MonoBehaviour
         {
             Vector3 movement = Vector3.zero;
 
-            switch (PreviousDir)
+            switch (part.GetComponent<Part>().PreviousDir)
             {
                 case Direction.Up:
                     movement = Vector3.forward * MoveSpeed * Time.deltaTime;
@@ -153,7 +150,7 @@ public class Component : MonoBehaviour
     }
 
     //Check to see if the part has left the boundary
-    private void CheckBounds()
+    private void CheckBounds(GameObject part)
     {
         var halfPart = partWidth / 2;
         var halfTile = tileWidth / 2;
@@ -168,24 +165,24 @@ public class Component : MonoBehaviour
 
         if (partPos.x > tilePos.x + space)
         {
-            GivePart();
+            GivePart(part);
         }
         else if (partPos.x < tilePos.x - space)
         {
-            GivePart();
+            GivePart(part);
         }
         else if(partPos.z > tilePos.z + space)
         {
-            GivePart();
+            GivePart(part);
         }
         else if (partPos.z < tilePos.z - space)
         {
-            GivePart();
+            GivePart(part);
         }
     }
 
     //Give the part to another tile when it leaves the boundary
-    public void GivePart()
+    public void GivePart(GameObject part)
     {
         Vector2 newTilePos = Vector2.zero;
 
@@ -205,30 +202,36 @@ public class Component : MonoBehaviour
                 break;
         }
 
-        hasPart = false;
+        hasParts = false;
 
         var manager = FindObjectOfType<ComponentManager>();
-        manager.MovePart(part, newTilePos, Dir);
+        part.GetComponent<Part>().PreviousDir = Dir;
+        manager.MovePart(part, newTilePos);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if(hasPart)
+        if(hasParts)
         {
-            //Debug.Log(TileNum);
-
-            if (!isAligned)
+            foreach (GameObject p in parts)
             {
-                MoveToCentre();
-            }
-            else
-            {
-                MovePart();
-            }
+                if (!p.GetComponent<Part>().CanMove)
+                    continue;
+                
 
-            CheckBounds();
+                if (!isAligned)
+                {
+                    MoveToCentre(p);
+                }
+                else
+                {
+                    MovePart(p);
+                }
+
+                CheckBounds(p);
+            }
         }
     }
 }

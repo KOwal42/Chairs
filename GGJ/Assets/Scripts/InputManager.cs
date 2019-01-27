@@ -86,6 +86,10 @@ public class InputManager : MonoBehaviour
         {
             levelManager.RotateSquare();
         }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            levelManager.StartMoving();
+        }
     }
 
     void Update()

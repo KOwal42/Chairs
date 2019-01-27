@@ -49,8 +49,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  Dir: 0
+  Dir: 3
+  PreviousDir: 0
   MoveSpeed: 10
+  TileNum: {x: 0, y: 0}
   part: {fileID: 0}
 --- !u!1001 &8220103238935722660
 PrefabInstance:

@@ -12,6 +12,10 @@ public class LevelManager : MonoBehaviour
 
     public GameObject[,] GameBoard;
 
+
+    public List<GameObject> Parts;
+
+
     GameObject activeSquare;
 
     public Vector2 selectedPos = Vector2.zero;
@@ -34,7 +38,7 @@ public class LevelManager : MonoBehaviour
 
     void SetupLevels()
     {
-        var level = new Level(3, 100,new int[1] {1}, 2); // Level 1
+        var level = new Level(3, 100,new int[2] {1, 2}, 2); // Level 1
         levels.Add(level);
         levels.Add(level); //add it twice so that level 1 is [1] and not [0]
 
@@ -80,6 +84,13 @@ public class LevelManager : MonoBehaviour
     public void RotateSquare()
     {
         componentManager.RotateComponent(selectedPos);
+    }
+
+    public void StartMoving()
+    {
+        Parts[0].GetComponent<Part>().CanMove = true;
+        Parts[1].GetComponent<Part>().CanMove = true;
+
     }
 
     public void AddComponent(int num)

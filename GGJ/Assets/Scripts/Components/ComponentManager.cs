@@ -8,9 +8,12 @@ public class ComponentManager : MonoBehaviour
     public GameObject[] Components = new GameObject[10]; 
 
     //change to component type 
-    GameObject[,] board;
+    public GameObject[,] board;
 
     int spacing = 64;
+
+    public List<GameObject> parts;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +25,14 @@ public class ComponentManager : MonoBehaviour
     {
         board = new GameObject[width, width];
 
-        AddComponent(new Vector2(0, 0), 4);
-        AddComponent(new Vector2(0, 1), 1);
-        AddComponent(new Vector2(0, 2), 1);
-        AddComponent(new Vector2(1, 0), 3);
-        AddComponent(new Vector2(1, 1), 5);
-        AddComponent(new Vector2(1, 2), 6);
-        AddComponent(new Vector2(2, 0), 4);
-        AddComponent(new Vector2(2, 1), 5);
-        AddComponent(new Vector2(2, 2), 6);
 
+        //DEBUG LEVEL BELOW
+        AddComponent(new Vector2(0, 0), 2);
+        AddComponent(new Vector2(0, 2), 3);
+        AddComponent(new Vector2(1, 0), 5);
+        AddComponent(new Vector2(1, 2), 5);
+        AddComponent(new Vector2(1, 1), 7);
+        AddComponent(new Vector2(2, 1), 1);
     }
 
     //Add component X to the board at the current position 
@@ -51,25 +52,35 @@ public class ComponentManager : MonoBehaviour
 
     public void AddInputs(int[] inputs)
     {
+        //parts = new List<GameObject>(); IS THIS REQUIRED?
+
+        var levelManager = FindObjectOfType<LevelManager>();
 
         for (int i = 0; i < inputs.Length; i++)
         {
             var entryPoint = inputs[i] - 1; //offset for [0]
 
-            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.localScale = new Vector3(18f, 18f, 18f);
-            cube.transform.position = new Vector3(-23f, 18f, 64f * entryPoint);
 
-            MovePart(cube, new Vector2(0, inputs[i]-1), Component.Direction.Right);
+            //TODO CREATE A PREFAB FOR THIS
+            var part = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            part.transform.localScale = new Vector3(18f, 18f, 18f);
+            part.transform.position = new Vector3(-23f, 18f, 64f * entryPoint);
+            part.AddComponent<Part>();
+
+            MovePart(part, new Vector2(0, inputs[i]-1));
+
+            levelManager.Parts.Add(part);
         }
     }
 
     //TODO - rename as it could confuse people 
     //Set the part to the specified tile
-    public void MovePart(GameObject part, Vector2 tilePos, Component.Direction previousDir)
+    public void MovePart(GameObject part, Vector2 tilePos)
     {
-        board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Part = part;
-        board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().PreviousDir = previousDir;
+        //get the previous list of parts, add the new part then set to the new list 
+        List<GameObject> parts = board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Parts;
+        parts.Add(part);
+        board[(int)tilePos.x, (int)tilePos.y].GetComponent<Component>().Parts = parts;
 
     }
 
