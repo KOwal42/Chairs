@@ -30,7 +30,7 @@ public class ComponentManager : MonoBehaviour
         AddComponent(new Vector2(0, 0), 2);
         AddComponent(new Vector2(0, 2), 3);
         AddComponent(new Vector2(1, 0), 5);
-        AddComponent(new Vector2(1, 2), 5);
+        AddComponent(new Vector2(1, 2), 8);
         AddComponent(new Vector2(1, 1), 7);
         AddComponent(new Vector2(2, 1), 1);
     }
