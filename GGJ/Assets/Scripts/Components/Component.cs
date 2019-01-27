@@ -8,7 +8,10 @@ public class Component : MonoBehaviour
 
 
     public ComponentType Type;
-    public Direction Dir = Direction.Up; 
+    public Direction Dir = Direction.Up;
+
+    public Direction PreviousDir = Direction.Up;
+
     public float MoveSpeed = 5f;
 
     //public Vector2 tileNum; //where on the board is this tile?
@@ -20,6 +23,8 @@ public class Component : MonoBehaviour
     private int tileWidth = 64;
 
     private bool hasPart = false;
+
+    private bool isAligned = false;
 
     //TODO make private after testing 
     public GameObject part;
@@ -57,32 +62,7 @@ public class Component : MonoBehaviour
         
     }
 
-    //Give the part to another tile when it leaves the boundary 
-    public void GivePart()
-    {
-        Vector2 newTilePos = Vector2.zero;
-
-        switch (Dir)
-        {
-            case Direction.Up:
-                newTilePos = Vector2.up + TileNum;
-                break;
-            case Direction.Down:
-                newTilePos = Vector2.down + TileNum;
-                break;
-            case Direction.Left:
-                newTilePos = Vector2.left + TileNum;
-                break;
-            case Direction.Right:
-                newTilePos = Vector2.right + TileNum;
-                break;
-        }
-
-        hasPart = false;
-
-        var manager = FindObjectOfType<ComponentManager>();
-        manager.MovePart(part, newTilePos);
-    }
+    //
 
     //TODO RENAME
     //Move the part in the set direction 
@@ -107,6 +87,48 @@ public class Component : MonoBehaviour
         }
 
         part.transform.position += movement;
+    }
+
+    //TODO - merge this with MovePart. Keep seperate until tested 
+    void MoveToCentre()
+    {
+        var pos = part.transform.position;
+
+        //make y = 18 (belt height) so we are testing 2D distance
+        var tilePos = new Vector3(TileNum.x * 64, 18f, TileNum.y * 64);
+
+
+        Debug.Log(Vector3.Distance(pos, tilePos));
+
+        if (Vector3.Distance(pos, tilePos) < 1)
+        {
+            part.transform.position = tilePos;
+            isAligned = true;
+            return;
+        }
+        else
+        {
+            Vector3 movement = Vector3.zero;
+
+            switch (PreviousDir)
+            {
+                case Direction.Up:
+                    movement = Vector3.forward * MoveSpeed * Time.deltaTime;
+                    break;
+                case Direction.Down:
+                    movement = Vector3.back * MoveSpeed * Time.deltaTime;
+                    break;
+                case Direction.Left:
+                    movement = Vector3.left * MoveSpeed * Time.deltaTime;
+                    break;
+                case Direction.Right:
+                    movement = Vector3.right * MoveSpeed * Time.deltaTime;
+                    break;
+            }
+
+            part.transform.position += movement;
+        }
+
     }
 
     public void Rotate()
@@ -162,12 +184,50 @@ public class Component : MonoBehaviour
         }
     }
 
+    //Give the part to another tile when it leaves the boundary
+    public void GivePart()
+    {
+        Vector2 newTilePos = Vector2.zero;
+
+        switch (Dir)
+        {
+            case Direction.Up:
+                newTilePos = Vector2.up + TileNum;
+                break;
+            case Direction.Down:
+                newTilePos = Vector2.down + TileNum;
+                break;
+            case Direction.Left:
+                newTilePos = Vector2.left + TileNum;
+                break;
+            case Direction.Right:
+                newTilePos = Vector2.right + TileNum;
+                break;
+        }
+
+        hasPart = false;
+
+        var manager = FindObjectOfType<ComponentManager>();
+        manager.MovePart(part, newTilePos, Dir);
+    }
+
+
     // Update is called once per frame
     void Update()
     {
         if(hasPart)
         {
-            MovePart();
+            //Debug.Log(TileNum);
+
+            if (!isAligned)
+            {
+                MoveToCentre();
+            }
+            else
+            {
+                MovePart();
+            }
+
             CheckBounds();
         }
     }
